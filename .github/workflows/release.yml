@@ -1,11 +1,7 @@
 name: Create Release
 
 on:
-  push:
-    branches: main
-    paths:
-      - '**/*.py'
-      - requirements.txt
+  workflow_call:
 
 permissions:
   contents: write

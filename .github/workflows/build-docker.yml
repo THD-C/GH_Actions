@@ -1,9 +1,7 @@
 name: Docker build image
 
 on:
-  pull_request:
-    types: [ opened, synchronize ]
-  workflow_dispatch:
+  workflow_call:
 
 jobs:
   Docker:
