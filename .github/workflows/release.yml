@@ -2,6 +2,11 @@ name: Create Release
 
 on:
   workflow_call:
+    inputs:
+      environment:
+        description: 'Environment to deploy to'
+        type: string
+        default: 'Production'
 
 permissions:
   contents: write
@@ -83,3 +88,22 @@ jobs:
         if: cancelled()
         run: |
           echo "# :no_entry_sign: Release Creation Canceled :no_entry_sign:" >> $GITHUB_STEP_SUMMARY
+
+  Build:
+    needs: Create
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment }}
+
+    steps:
+      - name: Checkout
+        shell: pwsh
+        run: |
+          Invoke-RestMethod -Method Post -Headers @{
+            "Accept"               = "application/vnd.github+json"
+            "Authorization"        = "Bearer ${{ secrets.THDCPL_TOKEN }}"
+            "X-GitHub-Api-Version" = "2022-11-28"
+          } -Body (
+              @{
+                  ref = "main"
+              } | ConvertTo-Json
+          ) -Uri "https://api.github.com/repos/THD-C/The_THDc_App/actions/workflows/build.yml/dispatches"
