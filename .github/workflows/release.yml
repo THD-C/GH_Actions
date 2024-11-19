@@ -95,7 +95,7 @@ jobs:
     environment: ${{ github.event.inputs.environment }}
 
     steps:
-      - name: Checkout
+      - name: Dispatch event
         shell: pwsh
         run: |
           Invoke-RestMethod -Method Post -Headers @{
