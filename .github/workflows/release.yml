@@ -7,6 +7,10 @@ on:
         description: 'Environment to deploy to'
         type: string
         default: 'Production'
+      build_docker: 
+        description: 'Build Docker Image'
+        type: boolean
+        default: true
 
     outputs:
       version_tag:
@@ -97,6 +101,7 @@ jobs:
           echo "# :no_entry_sign: Release Creation Canceled :no_entry_sign:" >> $GITHUB_STEP_SUMMARY
 
   Build:
+    if: ${{ github.event.inputs.build_docker == true }}
     needs: Create
     runs-on: ubuntu-latest
     environment: ${{ github.event.inputs.environment }}
