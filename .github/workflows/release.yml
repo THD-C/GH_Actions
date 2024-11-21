@@ -8,12 +8,19 @@ on:
         type: string
         default: 'Production'
 
+    outputs:
+      version_tag:
+        description: "Version tag for new Release"
+        value: ${{ jobs.Create.outputs.version }}
+
 permissions:
   contents: write
 
 jobs:
   Create:
     runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.available-ver.outputs.version }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
