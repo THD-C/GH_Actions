@@ -2,10 +2,6 @@ name: Docker build image
 
 on:
   workflow_call:
-    inputs:
-      build_docker: 
-        type: boolean
-        default: true
 
 jobs:
   Docker:
@@ -30,7 +26,6 @@ jobs:
           Add-Content -Path $env:GITHUB_OUTPUT -Value "name=$ImageName"
 
       - name: Build and push
-        if: ${{ github.event.inputs.build_docker == true }}
         uses: docker/build-push-action@v6
         with:
           context: .
