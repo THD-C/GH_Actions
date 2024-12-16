@@ -100,43 +100,43 @@ jobs:
         run: |
           echo "# :no_entry_sign: Release Creation Canceled :no_entry_sign:" >> $GITHUB_STEP_SUMMARY
 
-  Build:
-    needs: Create
-    runs-on: ubuntu-latest
-    environment: ${{ github.event.inputs.environment }}
+  # Build:
+  #   needs: Create
+  #   runs-on: ubuntu-latest
+  #   environment: ${{ github.event.inputs.environment }}
 
-    steps:
-      - name: Dispatch event
-        shell: pwsh
-        run: |
-          Invoke-RestMethod -Method Post -Headers @{
-            "Accept"               = "application/vnd.github+json"
-            "Authorization"        = "Bearer ${{ secrets.THDCPL_TOKEN }}"
-            "X-GitHub-Api-Version" = "2022-11-28"
-          } -Body (
-              @{
-                  ref = "main"
-              } | ConvertTo-Json
-          ) -Uri "https://api.github.com/repos/THD-C/The_THDc_App/actions/workflows/build.yml/dispatches"
+  #   steps:
+  #     - name: Dispatch event
+  #       shell: pwsh
+  #       run: |
+  #         Invoke-RestMethod -Method Post -Headers @{
+  #           "Accept"               = "application/vnd.github+json"
+  #           "Authorization"        = "Bearer ${{ secrets.THDCPL_TOKEN }}"
+  #           "X-GitHub-Api-Version" = "2022-11-28"
+  #         } -Body (
+  #             @{
+  #                 ref = "main"
+  #             } | ConvertTo-Json
+  #         ) -Uri "https://api.github.com/repos/THD-C/The_THDc_App/actions/workflows/build.yml/dispatches"
 
-  Deploy:
-    needs: Build
-    runs-on: ubuntu-latest
-    environment: ${{ github.event.inputs.environment }}
+  # Deploy:
+  #   needs: Build
+  #   runs-on: ubuntu-latest
+  #   environment: ${{ github.event.inputs.environment }}
 
-    steps:
-      - name: Dispatch event
-        shell: pwsh
-        run: |
-          Invoke-RestMethod -Method Post -Headers @{
-            "Accept"               = "application/vnd.github+json"
-            "Authorization"        = "Bearer ${{ secrets.THDCPL_TOKEN }}"
-            "X-GitHub-Api-Version" = "2022-11-28"
-          } -Body (
-              @{
-                  ref = "main"
-                  inputs = @{
-                    "environment" = "Production"
-                  }
-              } | ConvertTo-Json
-          ) -Uri "https://api.github.com/repos/THD-C/The_THDc_App/actions/workflows/deploy.yml/dispatches"
+  #   steps:
+  #     - name: Dispatch event
+  #       shell: pwsh
+  #       run: |
+  #         Invoke-RestMethod -Method Post -Headers @{
+  #           "Accept"               = "application/vnd.github+json"
+  #           "Authorization"        = "Bearer ${{ secrets.THDCPL_TOKEN }}"
+  #           "X-GitHub-Api-Version" = "2022-11-28"
+  #         } -Body (
+  #             @{
+  #                 ref = "main"
+  #                 inputs = @{
+  #                   "environment" = "Production"
+  #                 }
+  #             } | ConvertTo-Json
+  #         ) -Uri "https://api.github.com/repos/THD-C/The_THDc_App/actions/workflows/deploy.yml/dispatches"
