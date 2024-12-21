@@ -110,6 +110,9 @@ jobs:
         shell: pwsh
         run: |
           $ServiceName = "${{ inputs.ServiceRepository }}"
+          if ($ServiceName.Lenght -le 0){
+            return 
+          }
           $ServiceName = $ServiceName.Split("/")[1]
 
           Invoke-RestMethod -Method Post -Headers @{
