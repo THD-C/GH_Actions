@@ -109,6 +109,9 @@ jobs:
       - name: Dispatch event
         shell: pwsh
         run: |
+          $RepoName = "THD-C/The_THDc_App"
+          $WorkflowName = "deploy-service.yml"
+
           $ServiceName = "${{ inputs.ServiceRepository }}"
           if ($ServiceName.Lenght -le 0){
             return 
@@ -127,4 +130,6 @@ jobs:
                     "service" = "$ServiceName"
                   }
               } | ConvertTo-Json
-          ) -Uri "https://api.github.com/repos/THD-C/The_THDc_App/actions/workflows/deploy-service.yml/dispatches"
+          ) -Uri "https://api.github.com/repos/$RepoName/actions/workflows/$WorkflowName/dispatches"
+
+          Write-Host "https://github.com/$RepoName/actions/workflows/$WorkflowName"
