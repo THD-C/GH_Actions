@@ -113,7 +113,7 @@ jobs:
           $WorkflowName = "deploy-service.yml"
 
           $ServiceName = "${{ inputs.ServiceRepository }}"
-          if ($ServiceName.Lenght -le 0){
+          if ($ServiceName.Length -le 0){
             return 
           }
           $ServiceName = $ServiceName.Split("/")[1]
